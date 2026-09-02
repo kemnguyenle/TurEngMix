@@ -1,4 +1,4 @@
-This is the repository for the scripts used in for the TurEngMix corpus building and experimentation.
+This is the repository for the scripts used for the TurEngMix corpus building and experimentation.
 
 Scripts found here include scripts for collecting and filtering Turkish-English code-mixed posts from Eksi Sozluk, tokenizing posts, running LID and NER tests, and generating synthetic code-mixed data and annotating with LLM-as-Judge.
 

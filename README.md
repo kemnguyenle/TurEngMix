@@ -1,6 +1,6 @@
 This is the repository for the scripts used for the TurEngMix corpus building and experimentation.
 
-Scripts found here include scripts for collecting and filtering Turkish-English code-mixed posts from Eksi Sozluk, tokenizing posts, running LID and NER tests, and generating synthetic code-mixed data and annotating with LLM-as-Judge.
+Scripts found here include scripts for collecting and filtering Turkish-English code-mixed posts from Eksi Sozluk, tokenizing posts, running LID and NER with the LLMs, and finetuning and testing encoder models.
 
 **/Dataset_Creation**: This folder includes the **eksi_sozluk_scraping.py** and the **tokenizer.py** scripts. **eksi_sozluk_scraping.py** contains the full script for scraping 200 pages of posts from Eksi Sozluk using a given topic list, filtering them with langdetect, and filtering them with two separate GPT4o prompts, then saving them all to a csv. **tokenizer.py** tokenizes a csv of given posts collected using the scraping script.
 

@@ -1,0 +1,51 @@
+Analyze the following text and identify named entities using the BIO tagging scheme.
+
+Use the following BIO format:
+- B-: The first token of a named entity.
+- I-: Any subsequent token belonging to the same named entity.
+- O: A token that is not part of any named entity.
+
+Use the following entity categories:
+
+- B-PER / I-PER (Person): Proper names or nicknames that uniquely identify a real or fictional person, including artists and famous people.
+- B-ORG / I-ORG (Organization): Companies, institutions, corporations, and other entities that have members or employees and act as a whole. When an entity could refer to either an organization or another category (e.g., Facebook), use the surrounding context to determine the correct label.
+- B-LOC / I-LOC (Location): Physical places that people can visit, including countries, cities, addresses, facilities, landmarks, restaurants, and tourist attractions. When an organization name is used to refer to a physical place, label it as LOC.
+- B-GROUP / I-GROUP (Group): Sports teams, music bands, duos, and similar groups of people.
+- B-PROD / I-PROD (Product): Manufactured products, medicines, food products, well-defined services, website applications, website accounts, devices, and similar products. Distinguish products from organizations using context.
+- B-TITLE / I-TITLE (Title): Titles of creative works such as movies, books, TV shows, songs, and similar media.
+- B-EVENT / I-EVENT (Event): Named events such as concerts, competitions, conferences, festivals, and award ceremonies. Do not use this category for holidays.
+- B-TIME / I-TIME (Time): Months, weekdays, seasons, holidays, and recurring calendar dates. Do not label hours, minutes, seconds, or relative temporal expressions such as "yesterday," "tomorrow," "week," or "year."
+- B-OTHER / I-OTHER (Other): Named entities that do not fit the categories above, including nationalities, languages, music genres, and similar entities.
+- O (None): Not part of a named entity
+
+A token may carry Turkish inflection on a non-Turkish stem (e.g. "tiktok'un", "bytedance'i"). Label the whole token by the entity it names; the suffix does not change the category.
+
+The input consists of numbered tokens. Each input line contains an integer index, followed by a tab character, followed by a token.
+
+For every input line:
+- Output exactly one line.
+- Preserve the same INDEX.
+- Assign exactly one named entity label.
+- Do not skip any indices.
+- Do not duplicate any indices.
+- Do not renumber the indices.
+
+Output each line in the following format:
+
+INDEX|LABEL
+
+The separator between INDEX and LABEL must be the vertical bar character "|".
+Do not use tabs.
+Do not use spaces.
+
+Correct:
+1|B-PER
+
+Incorrect:
+1 B-PER
+1	B-PER
+1: B-PER
+
+The number of output lines must exactly equal the number of input lines.
+
+Return only the INDEX|LABEL pairs, one per line. Do not include the original tokens, explanations, numbering, headings, blank lines, or any other text.

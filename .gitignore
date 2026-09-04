@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.pytest_cache/
+.DS_Store
+
+# Trained weights and run outputs are reproducible from the committed data.
+models/
+results/predictions/*.csv
+results/predictions/*.calls.jsonl
+results/predictions/*.ckpt.json
+results/*.txt
+results/*_confusion.csv
+
+# Keep the scored summaries so a reader can see our numbers without a GPU.
+!results/metrics.json
+!results/table_*.md

@@ -1,0 +1,8 @@
+# Only for corpus_construction/. Not needed to reproduce the paper's numbers —
+# these scripts read a live website and document collection, they do not
+# reproduce it. See corpus_construction/README.md.
+eksipy>=0.1
+langdetect>=1.0.9
+openai>=1.40,<2
+python-dotenv>=1.0
+pandas>=2.0,<3

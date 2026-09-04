@@ -1,0 +1,214 @@
+Analyze the following text and identify named entities using the BIO tagging scheme.
+
+Use the following BIO format:
+- B-: The first token of a named entity.
+- I-: Any subsequent token belonging to the same named entity.
+- O: A token that is not part of any named entity.
+
+Use the following entity categories:
+
+- B-PER / I-PER (Person): Proper names or nicknames that uniquely identify a real or fictional person, including artists and famous people.
+- B-ORG / I-ORG (Organization): Companies, institutions, corporations, and other entities that have members or employees and act as a whole. When an entity could refer to either an organization or another category (e.g., Facebook), use the surrounding context to determine the correct label.
+- B-LOC / I-LOC (Location): Physical places that people can visit, including countries, cities, addresses, facilities, landmarks, restaurants, and tourist attractions. When an organization name is used to refer to a physical place, label it as LOC.
+- B-GROUP / I-GROUP (Group): Sports teams, music bands, duos, and similar groups of people.
+- B-PROD / I-PROD (Product): Manufactured products, medicines, food products, well-defined services, website applications, website accounts, devices, and similar products. Distinguish products from organizations using context.
+- B-TITLE / I-TITLE (Title): Titles of creative works such as movies, books, TV shows, songs, and similar media.
+- B-EVENT / I-EVENT (Event): Named events such as concerts, competitions, conferences, festivals, and award ceremonies. Do not use this category for holidays.
+- B-TIME / I-TIME (Time): Months, weekdays, seasons, holidays, and recurring calendar dates. Do not label hours, minutes, seconds, or relative temporal expressions such as "yesterday," "tomorrow," "week," or "year."
+- B-OTHER / I-OTHER (Other): Named entities that do not fit the categories above, including nationalities, languages, music genres, and similar entities.
+- O (None): Not part of a named entity
+
+A token may carry Turkish inflection on a non-Turkish stem (e.g. "tiktok'un", "bytedance'i"). Label the whole token by the entity it names; the suffix does not change the category.
+
+The input consists of numbered tokens. Each input line contains an integer index, followed by a tab character, followed by a token.
+
+For every input line:
+- Output exactly one line.
+- Preserve the same INDEX.
+- Assign exactly one named entity label.
+- Do not skip any indices.
+- Do not duplicate any indices.
+- Do not renumber the indices.
+
+Output each line in the following format:
+
+INDEX|LABEL
+
+The separator between INDEX and LABEL must be the vertical bar character "|".
+Do not use tabs.
+Do not use spaces.
+
+Correct:
+1|B-PER
+
+Incorrect:
+1 B-PER
+1	B-PER
+1: B-PER
+
+The number of output lines must exactly equal the number of input lines.
+
+Return only the INDEX|LABEL pairs, one per line. Do not include the original tokens, explanations, numbering, headings, blank lines, or any other text.
+
+The examples below show the exact input and output format you must follow.
+
+Example 1
+Input:
+1	trump
+2	hükümetinin
+3	tiktok'un
+4	sahibi
+5	çinli
+6	bytedance'i
+7	tiktok'u
+8	bir
+9	amerikan
+10	firmasına
+11	satmaya
+12	zorlayacağı
+13	iddia
+14	ediliyor
+
+Output:
+1|B-PER
+2|O
+3|B-PROD
+4|O
+5|O
+6|B-ORG
+7|B-PROD
+8|O
+9|B-OTHER
+10|O
+11|O
+12|O
+13|O
+14|O
+
+Example 2
+Input:
+1	ben
+2	burada
+3	x-files
+4	seinfeld
+5	married
+6	with
+7	children
+8	gibi
+9	eski
+10	dizileri
+11	izliyorum
+12	bayıldığınız
+13	netflixte
+14	de
+15	bizim
+16	bayıldığımız
+17	seinfeld
+18	yok
+19	yine
+20	tüm
+21	dünyanın
+22	bayıldığı
+23	game
+24	of
+25	thrones
+26	da
+27	netflixte
+28	yok
+
+Output:
+1|O
+2|O
+3|B-TITLE
+4|B-TITLE
+5|B-TITLE
+6|I-TITLE
+7|I-TITLE
+8|O
+9|O
+10|O
+11|O
+12|O
+13|B-PROD
+14|O
+15|O
+16|O
+17|B-TITLE
+18|O
+19|O
+20|O
+21|O
+22|O
+23|B-TITLE
+24|I-TITLE
+25|I-TITLE
+26|O
+27|B-PROD
+28|O
+
+Example 3
+Input:
+1	simdi
+2	linkedin
+3	hesabi
+4	olan
+5	oracle
+6	google
+7	ve
+8	apple
+9	yoneticileri
+10	dusunsun
+11	mesela
+12	oracle
+13	da
+14	senior
+15	bir
+16	yoneticisin
+17	sana
+18	bagli
+19	developer'lar
+20	cloud'i
+21	ucuruyor
+22	felan
+23	ama
+24	butun
+25	business
+26	baglantilarin
+27	cv'n
+28	vs
+29	hesabin
+30	microsoft
+31	cloud'in
+
+Output:
+1|O
+2|B-PROD
+3|O
+4|O
+5|B-ORG
+6|B-ORG
+7|O
+8|B-ORG
+9|O
+10|O
+11|O
+12|B-ORG
+13|O
+14|O
+15|O
+16|O
+17|O
+18|O
+19|O
+20|O
+21|O
+22|O
+23|O
+24|O
+25|O
+26|O
+27|O
+28|O
+29|O
+30|B-PROD
+31|I-PROD

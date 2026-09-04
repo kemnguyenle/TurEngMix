@@ -1,0 +1,51 @@
+TurEngMix corpus and benchmark — licence
+========================================
+
+RECOMMENDED: Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+             International (CC BY-NC-SA 4.0)
+             https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+DECISION NEEDED BEFORE RELEASE
+------------------------------
+The Hugging Face dataset card currently declares CC BY-NC-ND 4.0. The **ND**
+(NoDerivatives) term prohibits distributing adapted material, which includes:
+
+  - a corrected or re-annotated version of this benchmark
+  - a derived subset, a re-tokenisation, or a different split
+  - a converted format (JSONL, CoNLL, a Hugging Face dataset script)
+
+Those are exactly what "model evaluation and benchmarking" and "future
+computational and sociolinguistic research on Turkish-English code-mixing"
+produce. As written, the licence forbids the use the dataset card invites,
+and it would block a later group from publishing a fix to the open annotation
+issues listed in data/README.md.
+
+CC BY-NC-SA keeps the non-commercial restriction and the attribution
+requirement, and additionally requires that derived versions carry the same
+licence. It permits the research the paper asks for.
+
+Confirm the choice, then make it consistent in three places:
+  1. this file
+  2. the `license:` field of the Hugging Face dataset card
+  3. CITATION.cff
+
+Whichever is chosen, the terms below apply.
+
+TERMS
+-----
+Attribution   Cite the paper (see CITATION.cff).
+NonCommercial No commercial use of the corpus or annotations.
+No re-identification
+              Do not attempt to identify the authors of the source posts, or
+              to link them to other data.
+
+SOURCE MATERIAL
+---------------
+The corpus consists of public posts from Ekşi Sözlük, collected as described
+in corpus_construction/. Copyright in the underlying posts remains with their
+authors; this licence covers the compilation and the annotations. See the PII
+note in data/README.md.
+
+CODE
+----
+The code in this repository is licensed separately, under MIT. See LICENSE.

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "TurEngMix: A Text Corpus and Benchmark for Turkish-English Code-Mixed Language Identification and Named Entity Recognition"
+message: "If you use this dataset or code, please cite it."
+type: dataset
+authors:
+  - family-names: Dogan
+    given-names: Ilayda
+    email: idogan@umd.edu
+    affiliation: University of Maryland
+repository-code: "https://github.com/ilydoa/TurEngMix"
+url: "https://huggingface.co/datasets/ilydoa/TurEngMix"
+license: MIT
+keywords:
+  - code-mixing
+  - code-switching
+  - Turkish
+  - English
+  - language identification
+  - named entity recognition

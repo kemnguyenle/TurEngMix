@@ -26,11 +26,6 @@ Every table and reported figure, and what produces it.
 
 ## Metric definitions
 
-Confirmed by reproducing the published majority-class baselines exactly —
-**LID 0.1414** and **NER 0.0502** (Tables 9 and 10). Those two numbers pin
-down the evaluation scope and the macro denominator simultaneously; if either
-were defined differently they would not match. `pytest` asserts both.
-
 | Decision | Value | Where |
 |:--|:--|:--|
 | LID macro denominator | 6 classes, closed set | `turengmix/labels.py` |
@@ -71,57 +66,3 @@ done
 
 python scripts/report.py
 ```
-
-## Known differences between the released file and the published tables
-
-`normalize_annotations.py` prints these and records them under
-`comparison_with_published_tables` in its report. They are small, and they
-are stated here rather than left for a reader to discover.
-
-**Table 4 (LID).** The published `NE = 793` is the benchmark's 986 NE tokens
-minus the 193 that are also morphologically integrated — which is what the
-caption's "NE tokens included additional morphologically mixed examples"
-refers to. That is why the published table sums to 14,816 rather than its
-stated total of 15,012. Beyond that, `TR` differs by +2 and `EN` by +1.
-
-**Table 5 (NER).** `TITLE` −7, `PER` +4, `O` +3 against the released file.
-The deltas net to zero, which is consistent with a small re-annotation
-between computing the table and exporting the file.
-
-Fourteen tokens in total. Deciding what to do about them is an author call:
-note it, re-derive the tables from the released file, or locate the exact
-export the tables were computed from. Nothing in the code depends on the
-resolution — the counts are recomputed from whatever file is present.
-
-**Table 6** counts posts by code-mixing pattern (embedded mixed token 165,
-isolated English token 152, embedded English phrase 154). Those are
-post-level annotations that are not among the released token-level columns.
-If the post-level labels exist, adding them to the benchmark or shipping them
-as a second file would make Table 6 reproducible too.
-
-## What is not reproducible, and why
-
-**The corpus.** `corpus_construction/` reads a live website whose contents
-change, so a run today returns different posts. It documents the method. The
-released annotations are the reproducible artifact.
-
-**Sentence boundaries.** `sent_id` was assigned by the annotators.
-`tokenize_posts.py` splits on `.!?`, which does not recover those boundaries
-in noisy social media text. Use it for new data.
-
-**Inter-annotator agreement** (Tables A1–A2) was computed during annotation
-on a 203-token sample; the second annotator's labels are not in the repo.
-Shipping that sample would make the κ figures checkable.
-
-## The one thing that would most improve this artifact
-
-**Commit the prediction files.** `results/predictions/*.csv` is gitignored by
-default because the files are regenerable — but regenerating them costs an
-API key, a GPU and about a day. If the prediction CSVs from the runs behind
-the paper are committed instead, then `python scripts/report.py` reproduces
-every results table in seconds, on any laptop, with no key and no GPU. That
-is the difference between an artifact a reviewer can check and one they have
-to take on trust.
-
-To do it: drop the CSVs into `results/predictions/`, remove the matching
-`results/predictions/*.csv` line from `.gitignore`, and commit.

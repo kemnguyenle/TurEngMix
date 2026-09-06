@@ -5,12 +5,6 @@
 
 This script cannot reproduce the original corpus. It reads a live website
 whose contents change, so a run today returns different entries from our run.
-It is released to document *how* the corpus was collected, not as a step in
-reproducing the paper's numbers — for that, use the released annotation file.
-
-Differences from the original: entries are deduplicated on (topic, text) and
-the output file is rewritten rather than appended, so an interrupted run that
-is restarted does not silently double the corpus.
 """
 
 from __future__ import annotations

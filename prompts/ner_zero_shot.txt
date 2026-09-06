@@ -23,7 +23,7 @@ The input consists of numbered tokens. Each input line contains an integer index
 For every input line:
 - Output exactly one line.
 - Preserve the same INDEX.
-- Assign exactly one language label.
+- Assign exactly one named entity label.
 - Do not skip any indices.
 - Do not duplicate any indices.
 - Do not renumber the indices.

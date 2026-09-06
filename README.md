@@ -27,13 +27,6 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 pytest -q
 ```
-
-The benchmark and the split are committed, so this works with no API key and
-no GPU. Among the 28 tests, two check the artifact against the paper directly:
-the split reproduces **Table 7** exactly (200/25/25 posts, 254/26/41
-sentences, 12,466/1,173/1,373 tokens), and the majority-class baselines
-reproduce **Table 9** and **Table 10** exactly (0.1414 and 0.0502).
-
 Rebuild the benchmark from the raw annotation export:
 
 ```bash
@@ -71,15 +64,11 @@ anything; `--limit 5` is a cheap smoke test.
 
 Two flags matter. **`--disable-reasoning` for Qwen3** — it is a hybrid
 reasoning model, and left on, `<think>` content competes with the label list
-for the token budget so long posts come back truncated. That scores as a model
-error when it is a budget error; `run_llm.py` logs `finish_reason` per call so
-the two stay distinguishable. And **`--seeds 1 2 3 4`** for encoders, because
+for the token budget so long posts come back truncated. And **`--seeds 1 2 3 4`** for encoders, because
 §5.2 reports mean ± SD over four seeds and a single-seed number is not
 comparable to the published table.
 
-Encoders were trained on one A6000, about six minutes per run. There are no
-cluster job files here — they encoded one account's paths and nobody else
-could run them. These commands are what those jobs wrapped.
+Encoders were trained on one A6000, about six minutes per run.
 
 ## How the numbers are defined
 
@@ -95,7 +84,7 @@ the same scale.
 
 **Evaluation scope differs by model family.** Decoders were run over the
 complete benchmark (250 posts); encoders were evaluated on the test split.
-`report.py` applies the right scope per run rather than one flag globally.
+`report.py` applies the right scope.
 
 **Malformed output counts as incorrect**, as in §5.1. Unparseable predictions
 become `UNK`, which is not in the label set, so it earns no credit and costs
@@ -130,7 +119,6 @@ data/
   normalization_report.json  every change, open issues, drift vs Tables 4-5
 corpus_construction/    how the corpus was collected (Appendix A.1-A.2)
 docs/PAPER_MAPPING.md   table-by-table mapping
-tests/                  28 tests
 ```
 
 Predictions are keyed by `(doc_id, sent_id, tok_id)` throughout, so a fresh
@@ -146,27 +134,6 @@ GPU and about a day. If you have the CSVs from the paper's runs, dropping them
 in `results/predictions/` makes `python scripts/report.py` reproduce every
 results table in seconds on any laptop. See the last section of
 `docs/PAPER_MAPPING.md`.
-
-**The released file differs from Tables 4 and 5 by fourteen tokens.**
-`normalize_annotations.py` prints the deltas and records them in its report.
-Table 4's `NE = 793` is the 986 NE tokens minus the 193 that are also
-morphologically integrated, which is what its caption alludes to; the rest is
-`TR` +2, `EN` +1, `TITLE` −7, `PER` +4, `O` +3.
-
-**Sixty-nine tokens have open annotation questions** — three ill-formed BIO
-transitions and 66 places where the LID and NER layers disagree about whether
-a token is part of a named entity, against the rule in §4.1.1 that entity
-tokens take `NE`. They are listed in `data/normalization_report.json` and
-deliberately not auto-repaired.
-
-**The test set is 25 documents** (1,373 tokens, 25 of them morphologically
-integrated), and the paper's Limitations section already says several
-categories have too few instances for reliable per-category evaluation. The
-four-seed spread in Table 9 is the right thing to read alongside any encoder
-comparison.
-
-**`OTHER` has 4 tokens and `I-TIME` has none** in the whole benchmark.
-Per-class figures for the rarest labels should not be read as estimates.
 
 ## Citation
 

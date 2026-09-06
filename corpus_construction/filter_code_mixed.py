@@ -4,7 +4,7 @@
     python corpus_construction/filter_code_mixed.py \
         --input data/raw/entries.csv --output data/raw/entries_code_mixed.csv
 
-Two stages, matching the corpus construction described in the paper:
+Two stages:
 
 1. `langdetect`, as a cheap recall-oriented pre-filter.
 2. Two GPT-4o prompts, run over the survivors, whose agreement decides
@@ -13,12 +13,6 @@ Two stages, matching the corpus construction described in the paper:
 Both stages write every intermediate decision to the output file rather than
 only the survivors, so the selection is auditable after the fact.
 
-Reproducibility notes. `langdetect` is seeded here — it is non-deterministic
-by default, and the original pipeline left it unseeded, so the corpus could
-not be reconstructed even from the same input. It is also applied per word,
-which is close to the least reliable way to use a profile-based detector; that
-is kept because it is what produced the released corpus, but it is the reason
-stage 1 is treated as recall-oriented and stage 2 does the real work.
 """
 
 from __future__ import annotations
@@ -82,9 +76,7 @@ def langdetect_is_code_mixed(text: str) -> bool:
         try:
             langs.add(detect(word))
         except LangDetectException:
-            # A word too short or too ambiguous to profile. Distinct from an
-            # unexpected error, which should surface rather than be swallowed
-            # by a bare `except: continue`.
+            # A word too short or too ambiguous to profile
             continue
     return "en" in langs and "tr" in langs
 
@@ -92,10 +84,6 @@ def langdetect_is_code_mixed(text: str) -> bool:
 def ask_batch(client, model: str, template: str, posts: list[str],
               retries: int = 4) -> list[bool | None]:
     """Run one prompt over a batch. Returns None for any post left unanswered.
-
-    An unparseable batch used to raise and discard the entire run's progress.
-    Here it degrades to None for the affected posts, which the caller records
-    and can revisit.
     """
     numbered = "\n".join(f"{i}. {p}" for i, p in enumerate(posts, 1))
     prompt = template.format(posts=numbered)
@@ -167,8 +155,7 @@ def main() -> int:
     candidates = df[df["langdetect_code_mixed"]].copy()
     posts = candidates[args.text_column].astype(str).tolist()
 
-    # Checkpoint per batch: a long filtering run should never lose everything
-    # to one bad response near the end.
+    # Checkpoint per batch
     ckpt = args.output.with_suffix(".ckpt.json")
     basic: list[bool | None] = []
     strict: list[bool | None] = []

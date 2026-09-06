@@ -1,40 +1,38 @@
 {
-  "input": "/Users/phuonganhnguyenle/Library/Application Support/Claude/scratch-workspaces/d4e664cc-bab5-4941-b2fd-d6e5e33ca40f/bed52fb3-aa6c-4652-8df4-b853c314f409/scratch-2026-09-03-d76531/turengmix/data/raw/annotations_raw.csv",
+  "input": "/Users/ilaydadogan/ilaydas_stuff/Fall2025VietMixResearch/TurEngMix/data/raw/annotations_raw.csv",
   "rows_in": 15012,
   "changes": {
     "dropped_index_columns": [
       "Unnamed: 0"
     ],
-    "whitespace_trimmed": {
-      "borrowed_suffix": 1
-    },
-    "blank_ner_filled_with_O": 1048,
-    "duplicate_keys_before": 2,
+    "whitespace_trimmed": {},
+    "blank_ner_filled_with_O": 0,
+    "duplicate_keys_before": 0,
     "duplicate_keys_after": 0,
-    "tok_id_gaps_closed": 1404,
+    "tok_id_gaps_closed": 0,
     "doc_ids_renumbered": 0,
     "doc_id_note": "left exactly as exported, to stay compatible with the identifiers already published on the Hub"
   },
   "comparison_with_published_tables": {
     "table4_lid": {
       "TR": {
-        "paper": 11749,
-        "benchmark": 11751,
-        "delta": 2
+        "paper": 11723,
+        "benchmark": 11723,
+        "delta": 0
       },
       "EN": {
-        "paper": 2015,
-        "benchmark": 2016,
-        "delta": 1
+        "paper": 1992,
+        "benchmark": 1992,
+        "delta": 0
       },
       "NE": {
-        "paper": 793,
-        "benchmark": 986,
-        "delta": 193
+        "paper": 1042,
+        "benchmark": 1042,
+        "delta": 0
       },
       "MIXED": {
-        "paper": 193,
-        "benchmark": 193,
+        "paper": 189,
+        "benchmark": 189,
         "delta": 0
       },
       "AMBIGUOUS": {
@@ -50,19 +48,19 @@
     },
     "table5_ner": {
       "O": {
-        "paper": 13981,
-        "benchmark": 13984,
-        "delta": 3
+        "paper": 13971,
+        "benchmark": 13971,
+        "delta": 0
       },
       "PROD": {
-        "paper": 350,
-        "benchmark": 350,
+        "paper": 359,
+        "benchmark": 359,
         "delta": 0
       },
       "TITLE": {
         "paper": 246,
-        "benchmark": 239,
-        "delta": -7
+        "benchmark": 246,
+        "delta": 0
       },
       "ORG": {
         "paper": 129,
@@ -71,17 +69,17 @@
       },
       "PER": {
         "paper": 119,
-        "benchmark": 123,
-        "delta": 4
+        "benchmark": 119,
+        "delta": 0
       },
       "LOC": {
-        "paper": 82,
-        "benchmark": 82,
+        "paper": 88,
+        "benchmark": 88,
         "delta": 0
       },
       "OTHER": {
-        "paper": 57,
-        "benchmark": 57,
+        "paper": 52,
+        "benchmark": 52,
         "delta": 0
       },
       "GROUP": {
@@ -101,50 +99,15 @@
       }
     },
     "notes": [
-      "Table 4 reports NE=793; the benchmark has 986 NE tokens, of which 193 are also morphologically integrated. 986 - 193 = 793, so Table 4's NE row excludes integrated NE tokens and the table sums to 14816, not 15012.",
+      "Table 4 reports NE=1042; the benchmark has 1042 NE tokens, of which 197 are also morphologically integrated. 1042 - 197 = 845, so Table 4's NE row excludes integrated NE tokens and the table sums to 15012, not 15012.",
       "Integrated tokens: paper 386, benchmark 386."
     ],
-    "unexplained_deltas": {
-      "table4_lid": {
-        "TR": {
-          "paper": 11749,
-          "benchmark": 11751,
-          "delta": 2
-        },
-        "EN": {
-          "paper": 2015,
-          "benchmark": 2016,
-          "delta": 1
-        },
-        "NE": {
-          "paper": 793,
-          "benchmark": 986,
-          "delta": 193
-        }
-      },
-      "table5_ner": {
-        "O": {
-          "paper": 13981,
-          "benchmark": 13984,
-          "delta": 3
-        },
-        "TITLE": {
-          "paper": 246,
-          "benchmark": 239,
-          "delta": -7
-        },
-        "PER": {
-          "paper": 119,
-          "benchmark": 123,
-          "delta": 4
-        }
-      }
-    }
+    "unexplained_deltas": {}
   },
   "issues_requiring_adjudication": {
     "ill_formed_bio": [
       {
-        "doc_id": "post_0036_36",
+        "doc_id": "post_036",
         "sent_id": 4,
         "tok_id": 0,
         "token": "fm",
@@ -152,173 +115,27 @@
         "previous_tag": null
       },
       {
-        "doc_id": "post_0036_36",
+        "doc_id": "post_036",
         "sent_id": 6,
         "tok_id": 0,
         "token": "fm",
         "tag": "I-ORG",
         "previous_tag": null
-      },
-      {
-        "doc_id": "post_0038_38",
-        "sent_id": 1,
-        "tok_id": 5,
-        "token": "halloween'i",
-        "tag": "I-EVENT",
-        "previous_tag": "O"
       }
     ],
     "entity_token_lid_not_NE": {
-      "count": 54,
-      "by_lid": {
-        "EN": 24,
-        "MIXED": 4,
-        "TR": 26
-      },
+      "count": 0,
+      "by_lid": {},
       "rule": "§4.1.1 states entity tokens take LID label NE",
-      "examples": [
-        {
-          "doc_id": "post_0008_8",
-          "sent_id": 1,
-          "token": "deep",
-          "lid": "EN",
-          "ner": "B-ORG"
-        },
-        {
-          "doc_id": "post_0008_8",
-          "sent_id": 1,
-          "token": "knowledge",
-          "lid": "EN",
-          "ner": "I-ORG"
-        },
-        {
-          "doc_id": "post_0008_8",
-          "sent_id": 1,
-          "token": "group'un",
-          "lid": "MIXED",
-          "ner": "I-ORG"
-        },
-        {
-          "doc_id": "post_007_47",
-          "sent_id": 1,
-          "token": "absentia",
-          "lid": "EN",
-          "ner": "B-TITLE"
-        },
-        {
-          "doc_id": "post_009_49",
-          "sent_id": 1,
-          "token": "pixels",
-          "lid": "EN",
-          "ner": "B-TITLE"
-        },
-        {
-          "doc_id": "post_018_58",
-          "sent_id": 1,
-          "token": "the",
-          "lid": "EN",
-          "ner": "B-OTHER"
-        },
-        {
-          "doc_id": "post_018_58",
-          "sent_id": 1,
-          "token": "moon",
-          "lid": "EN",
-          "ner": "I-OTHER"
-        },
-        {
-          "doc_id": "post_018_58",
-          "sent_id": 1,
-          "token": "monsters",
-          "lid": "EN",
-          "ner": "I-OTHER"
-        },
-        {
-          "doc_id": "post_018_58",
-          "sent_id": 1,
-          "token": "whitelist",
-          "lid": "EN",
-          "ner": "B-OTHER"
-        },
-        {
-          "doc_id": "post_018_58",
-          "sent_id": 1,
-          "token": "wl",
-          "lid": "EN",
-          "ner": "B-OTHER"
-        }
-      ]
+      "examples": []
     },
     "lid_NE_without_entity_tag": {
-      "count": 12,
+      "count": 1,
       "examples": [
         {
-          "doc_id": "post_005_104",
-          "sent_id": 1,
-          "token": "chatgpt",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_005_104",
-          "sent_id": 1,
-          "token": "chatgpt",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_005_104",
-          "sent_id": 1,
-          "token": "youtube",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_013_112",
-          "sent_id": 1,
-          "token": "edit",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_019_118",
-          "sent_id": 1,
-          "token": "bash",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_025_124",
+          "doc_id": "post_124",
           "sent_id": 1,
           "token": "facebook'un",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_052_151",
-          "sent_id": 1,
-          "token": "silikon",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_053_152",
-          "sent_id": 1,
-          "token": "iphone",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_098_197",
-          "sent_id": 1,
-          "token": "whatsapp,",
-          "lid": "NE",
-          "ner": "O"
-        },
-        {
-          "doc_id": "post_141_240",
-          "sent_id": 1,
-          "token": "react'te",
           "lid": "NE",
           "ner": "O"
         }
@@ -332,44 +149,44 @@
   "documents": 250,
   "sentences": 321,
   "lid_distribution": {
-    "TR": 11751,
-    "EN": 2016,
-    "NE": 986,
-    "MIXED": 193,
+    "TR": 11723,
+    "EN": 1992,
+    "NE": 1042,
+    "MIXED": 189,
     "AMBIGUOUS": 62,
     "OTHER": 4
   },
   "ner_distribution": {
-    "O": 13984,
-    "B-PROD": 304,
-    "B-TITLE": 122,
-    "I-TITLE": 117,
+    "O": 13971,
+    "B-PROD": 313,
+    "B-TITLE": 124,
+    "I-TITLE": 122,
     "B-ORG": 100,
-    "B-PER": 74,
-    "B-LOC": 66,
-    "I-PER": 49,
-    "B-OTHER": 49,
+    "B-PER": 73,
+    "B-LOC": 70,
+    "I-PER": 46,
     "I-PROD": 46,
+    "B-OTHER": 46,
     "I-ORG": 29,
-    "I-LOC": 16,
+    "I-LOC": 18,
     "B-GROUP": 15,
-    "I-EVENT": 14,
+    "I-EVENT": 13,
     "I-GROUP": 11,
-    "I-OTHER": 8,
-    "B-EVENT": 5,
+    "B-EVENT": 6,
+    "I-OTHER": 6,
     "B-TIME": 3
   },
   "ner_by_entity_type": {
-    "O": 13984,
-    "PER": 123,
+    "O": 13971,
+    "PER": 119,
     "ORG": 129,
-    "LOC": 82,
+    "LOC": 88,
     "GROUP": 26,
-    "PROD": 350,
-    "TITLE": 239,
+    "PROD": 359,
+    "TITLE": 246,
     "EVENT": 19,
     "TIME": 3,
-    "OTHER": 57
+    "OTHER": 52
   },
   "morphologically_integrated_tokens": 386
 }

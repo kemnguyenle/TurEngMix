@@ -49,10 +49,10 @@ OUT = REPO_ROOT / "data" / "benchmark.csv"
 REPORT = REPO_ROOT / "data" / "normalization_report.json"
 
 # Published counts, for drift detection.
-PAPER_LID = {"TR": 11749, "EN": 2015, "NE": 793, "MIXED": 193,
+PAPER_LID = {"TR": 11723, "EN": 1992, "NE": 1042, "MIXED": 189,
              "AMBIGUOUS": 62, "OTHER": 4}          # Table 4
-PAPER_NER = {"O": 13981, "PROD": 350, "TITLE": 246, "ORG": 129, "PER": 119,
-             "LOC": 82, "OTHER": 57, "GROUP": 26, "EVENT": 19, "TIME": 3}  # Table 5
+PAPER_NER = {"O": 13971, "PROD": 359, "TITLE": 246, "ORG": 129, "PER": 119,
+             "LOC": 88, "OTHER": 52, "GROUP": 26, "EVENT": 19, "TIME": 3}  # Table 5
 PAPER_INTEGRATED = 386                              # §4.1.1
 PAPER_TOTAL = 15012
 

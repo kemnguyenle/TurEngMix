@@ -1,4 +1,4 @@
-,doc_id,sent_id,tok_id,token,lid,integrated,ner
+,doc_id,sent_id,tok_id,token,lid,borrowed_suffix,ner
 0,post_001,1,0,yabancı,TR,,O
 1,post_001,1,1,bir,TR,,O
 2,post_001,1,2,hocamızın,TR,,O
@@ -7262,7 +7262,7 @@
 7260,post_124,1,221,"""impostor""luk",MIXED,MIXED,O
 7261,post_124,1,222,olarak,TR,,O
 7262,post_124,1,223,degerlendirilebilir,TR,,O
-7263,post_124,1,224,facebook'un,NE,MIXED,O
+7263,post_124,1,224,facebook'un,NE,MIXED,B-PROD
 7264,post_124,1,225,bir,TR,,O
 7265,post_124,1,226,impostor,EN,,O
 7266,post_124,1,227,shield'i,MIXED,MIXED,O

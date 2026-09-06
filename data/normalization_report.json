@@ -1,0 +1,375 @@
+{
+  "input": "/Users/phuonganhnguyenle/Library/Application Support/Claude/scratch-workspaces/d4e664cc-bab5-4941-b2fd-d6e5e33ca40f/bed52fb3-aa6c-4652-8df4-b853c314f409/scratch-2026-09-03-d76531/turengmix/data/raw/annotations_raw.csv",
+  "rows_in": 15012,
+  "changes": {
+    "dropped_index_columns": [
+      "Unnamed: 0"
+    ],
+    "whitespace_trimmed": {
+      "borrowed_suffix": 1
+    },
+    "blank_ner_filled_with_O": 1048,
+    "duplicate_keys_before": 2,
+    "duplicate_keys_after": 0,
+    "tok_id_gaps_closed": 1404,
+    "doc_ids_renumbered": 0,
+    "doc_id_note": "left exactly as exported, to stay compatible with the identifiers already published on the Hub"
+  },
+  "comparison_with_published_tables": {
+    "table4_lid": {
+      "TR": {
+        "paper": 11749,
+        "benchmark": 11751,
+        "delta": 2
+      },
+      "EN": {
+        "paper": 2015,
+        "benchmark": 2016,
+        "delta": 1
+      },
+      "NE": {
+        "paper": 793,
+        "benchmark": 986,
+        "delta": 193
+      },
+      "MIXED": {
+        "paper": 193,
+        "benchmark": 193,
+        "delta": 0
+      },
+      "AMBIGUOUS": {
+        "paper": 62,
+        "benchmark": 62,
+        "delta": 0
+      },
+      "OTHER": {
+        "paper": 4,
+        "benchmark": 4,
+        "delta": 0
+      }
+    },
+    "table5_ner": {
+      "O": {
+        "paper": 13981,
+        "benchmark": 13984,
+        "delta": 3
+      },
+      "PROD": {
+        "paper": 350,
+        "benchmark": 350,
+        "delta": 0
+      },
+      "TITLE": {
+        "paper": 246,
+        "benchmark": 239,
+        "delta": -7
+      },
+      "ORG": {
+        "paper": 129,
+        "benchmark": 129,
+        "delta": 0
+      },
+      "PER": {
+        "paper": 119,
+        "benchmark": 123,
+        "delta": 4
+      },
+      "LOC": {
+        "paper": 82,
+        "benchmark": 82,
+        "delta": 0
+      },
+      "OTHER": {
+        "paper": 57,
+        "benchmark": 57,
+        "delta": 0
+      },
+      "GROUP": {
+        "paper": 26,
+        "benchmark": 26,
+        "delta": 0
+      },
+      "EVENT": {
+        "paper": 19,
+        "benchmark": 19,
+        "delta": 0
+      },
+      "TIME": {
+        "paper": 3,
+        "benchmark": 3,
+        "delta": 0
+      }
+    },
+    "notes": [
+      "Table 4 reports NE=793; the benchmark has 986 NE tokens, of which 193 are also morphologically integrated. 986 - 193 = 793, so Table 4's NE row excludes integrated NE tokens and the table sums to 14816, not 15012.",
+      "Integrated tokens: paper 386, benchmark 386."
+    ],
+    "unexplained_deltas": {
+      "table4_lid": {
+        "TR": {
+          "paper": 11749,
+          "benchmark": 11751,
+          "delta": 2
+        },
+        "EN": {
+          "paper": 2015,
+          "benchmark": 2016,
+          "delta": 1
+        },
+        "NE": {
+          "paper": 793,
+          "benchmark": 986,
+          "delta": 193
+        }
+      },
+      "table5_ner": {
+        "O": {
+          "paper": 13981,
+          "benchmark": 13984,
+          "delta": 3
+        },
+        "TITLE": {
+          "paper": 246,
+          "benchmark": 239,
+          "delta": -7
+        },
+        "PER": {
+          "paper": 119,
+          "benchmark": 123,
+          "delta": 4
+        }
+      }
+    }
+  },
+  "issues_requiring_adjudication": {
+    "ill_formed_bio": [
+      {
+        "doc_id": "post_0036_36",
+        "sent_id": 4,
+        "tok_id": 0,
+        "token": "fm",
+        "tag": "I-ORG",
+        "previous_tag": null
+      },
+      {
+        "doc_id": "post_0036_36",
+        "sent_id": 6,
+        "tok_id": 0,
+        "token": "fm",
+        "tag": "I-ORG",
+        "previous_tag": null
+      },
+      {
+        "doc_id": "post_0038_38",
+        "sent_id": 1,
+        "tok_id": 5,
+        "token": "halloween'i",
+        "tag": "I-EVENT",
+        "previous_tag": "O"
+      }
+    ],
+    "entity_token_lid_not_NE": {
+      "count": 54,
+      "by_lid": {
+        "EN": 24,
+        "MIXED": 4,
+        "TR": 26
+      },
+      "rule": "§4.1.1 states entity tokens take LID label NE",
+      "examples": [
+        {
+          "doc_id": "post_0008_8",
+          "sent_id": 1,
+          "token": "deep",
+          "lid": "EN",
+          "ner": "B-ORG"
+        },
+        {
+          "doc_id": "post_0008_8",
+          "sent_id": 1,
+          "token": "knowledge",
+          "lid": "EN",
+          "ner": "I-ORG"
+        },
+        {
+          "doc_id": "post_0008_8",
+          "sent_id": 1,
+          "token": "group'un",
+          "lid": "MIXED",
+          "ner": "I-ORG"
+        },
+        {
+          "doc_id": "post_007_47",
+          "sent_id": 1,
+          "token": "absentia",
+          "lid": "EN",
+          "ner": "B-TITLE"
+        },
+        {
+          "doc_id": "post_009_49",
+          "sent_id": 1,
+          "token": "pixels",
+          "lid": "EN",
+          "ner": "B-TITLE"
+        },
+        {
+          "doc_id": "post_018_58",
+          "sent_id": 1,
+          "token": "the",
+          "lid": "EN",
+          "ner": "B-OTHER"
+        },
+        {
+          "doc_id": "post_018_58",
+          "sent_id": 1,
+          "token": "moon",
+          "lid": "EN",
+          "ner": "I-OTHER"
+        },
+        {
+          "doc_id": "post_018_58",
+          "sent_id": 1,
+          "token": "monsters",
+          "lid": "EN",
+          "ner": "I-OTHER"
+        },
+        {
+          "doc_id": "post_018_58",
+          "sent_id": 1,
+          "token": "whitelist",
+          "lid": "EN",
+          "ner": "B-OTHER"
+        },
+        {
+          "doc_id": "post_018_58",
+          "sent_id": 1,
+          "token": "wl",
+          "lid": "EN",
+          "ner": "B-OTHER"
+        }
+      ]
+    },
+    "lid_NE_without_entity_tag": {
+      "count": 12,
+      "examples": [
+        {
+          "doc_id": "post_005_104",
+          "sent_id": 1,
+          "token": "chatgpt",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_005_104",
+          "sent_id": 1,
+          "token": "chatgpt",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_005_104",
+          "sent_id": 1,
+          "token": "youtube",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_013_112",
+          "sent_id": 1,
+          "token": "edit",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_019_118",
+          "sent_id": 1,
+          "token": "bash",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_025_124",
+          "sent_id": 1,
+          "token": "facebook'un",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_052_151",
+          "sent_id": 1,
+          "token": "silikon",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_053_152",
+          "sent_id": 1,
+          "token": "iphone",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_098_197",
+          "sent_id": 1,
+          "token": "whatsapp,",
+          "lid": "NE",
+          "ner": "O"
+        },
+        {
+          "doc_id": "post_141_240",
+          "sent_id": 1,
+          "token": "react'te",
+          "lid": "NE",
+          "ner": "O"
+        }
+      ]
+    },
+    "labels_never_observed": [
+      "I-TIME"
+    ]
+  },
+  "rows_out": 15012,
+  "documents": 250,
+  "sentences": 321,
+  "lid_distribution": {
+    "TR": 11751,
+    "EN": 2016,
+    "NE": 986,
+    "MIXED": 193,
+    "AMBIGUOUS": 62,
+    "OTHER": 4
+  },
+  "ner_distribution": {
+    "O": 13984,
+    "B-PROD": 304,
+    "B-TITLE": 122,
+    "I-TITLE": 117,
+    "B-ORG": 100,
+    "B-PER": 74,
+    "B-LOC": 66,
+    "I-PER": 49,
+    "B-OTHER": 49,
+    "I-PROD": 46,
+    "I-ORG": 29,
+    "I-LOC": 16,
+    "B-GROUP": 15,
+    "I-EVENT": 14,
+    "I-GROUP": 11,
+    "I-OTHER": 8,
+    "B-EVENT": 5,
+    "B-TIME": 3
+  },
+  "ner_by_entity_type": {
+    "O": 13984,
+    "PER": 123,
+    "ORG": 129,
+    "LOC": 82,
+    "GROUP": 26,
+    "PROD": 350,
+    "TITLE": 239,
+    "EVENT": 19,
+    "TIME": 3,
+    "OTHER": 57
+  },
+  "morphologically_integrated_tokens": 386
+}

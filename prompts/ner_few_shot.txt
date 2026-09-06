@@ -18,14 +18,12 @@ Use the following entity categories:
 - B-OTHER / I-OTHER (Other): Named entities that do not fit the categories above, including nationalities, languages, music genres, and similar entities.
 - O (None): Not part of a named entity
 
-A token may carry Turkish inflection on a non-Turkish stem (e.g. "tiktok'un", "bytedance'i"). Label the whole token by the entity it names; the suffix does not change the category.
-
 The input consists of numbered tokens. Each input line contains an integer index, followed by a tab character, followed by a token.
 
 For every input line:
 - Output exactly one line.
 - Preserve the same INDEX.
-- Assign exactly one named entity label.
+- Assign exactly one language label.
 - Do not skip any indices.
 - Do not duplicate any indices.
 - Do not renumber the indices.
@@ -34,40 +32,12 @@ Output each line in the following format:
 
 INDEX|LABEL
 
-The separator between INDEX and LABEL must be the vertical bar character "|".
-Do not use tabs.
-Do not use spaces.
-
-Correct:
-1|B-PER
-
-Incorrect:
-1 B-PER
-1	B-PER
-1: B-PER
-
 The number of output lines must exactly equal the number of input lines.
 
 Return only the INDEX|LABEL pairs, one per line. Do not include the original tokens, explanations, numbering, headings, blank lines, or any other text.
 
-The examples below show the exact input and output format you must follow.
-
-Example 1
-Input:
-1	trump
-2	hükümetinin
-3	tiktok'un
-4	sahibi
-5	çinli
-6	bytedance'i
-7	tiktok'u
-8	bir
-9	amerikan
-10	firmasına
-11	satmaya
-12	zorlayacağı
-13	iddia
-14	ediliyor
+Example 1:
+Text: trump hükümetinin tiktok'un sahibi çinli bytedance'i tiktok'u bir amerikan firmasına satmaya zorlayacağı iddia ediliyor.
 
 Output:
 1|B-PER
@@ -81,44 +51,17 @@ Output:
 9|B-OTHER
 10|O
 11|O
-12|O
-13|O
+12|O 
+13|O 
 14|O
 
-Example 2
-Input:
-1	ben
-2	burada
-3	x-files
-4	seinfeld
-5	married
-6	with
-7	children
-8	gibi
-9	eski
-10	dizileri
-11	izliyorum
-12	bayıldığınız
-13	netflixte
-14	de
-15	bizim
-16	bayıldığımız
-17	seinfeld
-18	yok
-19	yine
-20	tüm
-21	dünyanın
-22	bayıldığı
-23	game
-24	of
-25	thrones
-26	da
-27	netflixte
-28	yok
+Example 2: 
+
+Text: ben burada x-files, seinfeld, married with children gibi eski dizileri izliyorum. bayıldığınız netflixte de bizim bayıldığımız seinfeld yok. yine tüm dünyanın bayıldığı game of thrones da netflixte yok.
 
 Output:
 1|O
-2|O
+2|O 
 3|B-TITLE
 4|B-TITLE
 5|B-TITLE
@@ -146,39 +89,12 @@ Output:
 27|B-PROD
 28|O
 
-Example 3
-Input:
-1	simdi
-2	linkedin
-3	hesabi
-4	olan
-5	oracle
-6	google
-7	ve
-8	apple
-9	yoneticileri
-10	dusunsun
-11	mesela
-12	oracle
-13	da
-14	senior
-15	bir
-16	yoneticisin
-17	sana
-18	bagli
-19	developer'lar
-20	cloud'i
-21	ucuruyor
-22	felan
-23	ama
-24	butun
-25	business
-26	baglantilarin
-27	cv'n
-28	vs
-29	hesabin
-30	microsoft
-31	cloud'in
+Example 3: 
+
+Text:
+simdi linkedin hesabi olan oracle google ve apple yoneticileri dusunsun. 
+mesela oracle da senior bir yoneticisin sana bagli developer'lar cloud'i ucuruyor 
+felan ama butun business baglantilarin cv'n vs. hesabin microsoft cloud'in da
 
 Output:
 1|O
@@ -212,3 +128,4 @@ Output:
 29|O
 30|B-PROD
 31|I-PROD
+32|O

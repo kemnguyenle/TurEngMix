@@ -18,14 +18,12 @@ Use the following entity categories:
 - B-OTHER / I-OTHER (Other): Named entities that do not fit the categories above, including nationalities, languages, music genres, and similar entities.
 - O (None): Not part of a named entity
 
-A token may carry Turkish inflection on a non-Turkish stem (e.g. "tiktok'un", "bytedance'i"). Label the whole token by the entity it names; the suffix does not change the category.
-
 The input consists of numbered tokens. Each input line contains an integer index, followed by a tab character, followed by a token.
 
 For every input line:
 - Output exactly one line.
 - Preserve the same INDEX.
-- Assign exactly one named entity label.
+- Assign exactly one language label.
 - Do not skip any indices.
 - Do not duplicate any indices.
 - Do not renumber the indices.
@@ -33,18 +31,6 @@ For every input line:
 Output each line in the following format:
 
 INDEX|LABEL
-
-The separator between INDEX and LABEL must be the vertical bar character "|".
-Do not use tabs.
-Do not use spaces.
-
-Correct:
-1|B-PER
-
-Incorrect:
-1 B-PER
-1	B-PER
-1: B-PER
 
 The number of output lines must exactly equal the number of input lines.
 

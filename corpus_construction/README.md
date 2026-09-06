@@ -2,8 +2,7 @@
 
 How the TurEngMix corpus was collected. **These scripts are documentation, not
 a reproduction path.** They read a live website whose contents change, so a run
-today returns different posts from ours. To reproduce the paper's numbers, use
-the released annotations in `../data/` — nothing here needs to run.
+today returns different posts from ours. 
 
 ```bash
 pip install -r ../requirements-corpus.txt
@@ -29,36 +28,14 @@ python tokenize_posts.py --input entries_code_mixed.csv \
 Stage 2 writes a decision for every entry, not only the survivors, so the
 selection is auditable afterwards.
 
-## Why this is not reproducible, precisely
-
-**The source changes.** Ekşi Sözlük entries are added, edited and deleted.
-
-**`langdetect` is applied per word.** That is close to the least reliable way
-to use a profile-based detector. It is kept because it is what produced the
-released corpus, and it is why stage 1 is treated as a recall-oriented
-pre-filter with stage 2 doing the real work. It is now seeded
-(`DetectorFactory.seed = 0`); it was not before, so the original filtering was
-non-deterministic even given identical input.
-
-**`sent_id` is not reproduced.** Sentence boundaries in the released benchmark
-were assigned by the annotators. `tokenize_posts.py` splits on `.!?`, which
-does not recover those boundaries in noisy social media text. Use it for new
-data, not to rebuild the benchmark.
-
-To make a future corpus reconstructible, record the retained entry IDs
-alongside the text — `scrape_eksisozluk.py` writes an `entry_id` column for
-this purpose.
-
 ## Tokenizer
 
 Word-level. URLs, @handles, hashtags and emoji are kept whole; trailing
 punctuation is split off every token.
 
 Turkish apostrophe suffixes stay attached to their stem — `Google'e` is one
-token, because an English stem plus a Turkish suffix being a single word is the
-entire subject of this benchmark. The earlier version suppressed punctuation
-splitting for tokens containing an apostrophe and ending in `e`, so `Google'e.`
-kept its period while `Spotify'da.` was split in two.
+token, because an English stem plus a Turkish suffix being a single word is a
+key subject of the benchmark. 
 
 `doc_id` is `post_NNNN` from the input row number, zero-padded to the width the
 corpus needs, so skipped (empty) posts leave a gap and every `doc_id` traces

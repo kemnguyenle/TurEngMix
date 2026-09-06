@@ -7,13 +7,9 @@
 Word-level tokenizer for Turkish-English social media text. URLs, @handles,
 hashtags and emoji are kept whole; sentence-final punctuation is split off.
 
-Turkish apostrophe suffixes stay attached to their stem: `Google'e` is one
-token, because the whole point of this corpus is that an English stem plus a
-Turkish suffix is a single mixed-language word. Trailing punctuation is
-stripped from *every* token, including those. The original version suppressed
-punctuation splitting for tokens containing an apostrophe and ending in "e",
-which produced `Google'e.` (with the period attached) but `Spotify'da.` split
-in two — arbitrary, and in exactly the token class the benchmark is about.
+Turkish apostrophe suffixes stay attached to their stem. Trailing punctuation is
+stripped from *every* token, including those. 
+
 """
 
 from __future__ import annotations
@@ -77,12 +73,7 @@ def tokenize_text(text: str) -> list[str]:
 
 
 def split_sentences(tokens: list[str]) -> list[list[str]]:
-    """Break a token list at sentence-final punctuation.
-
-    Note: `sent_id` in the released benchmark came from the annotators, not
-    from this function. Automatic segmentation of noisy social media text does
-    not reproduce those boundaries; this is for segmenting *new* data.
-    """
+    # Break a token list at sentence-final punctuation.
     out, current = [], []
     for tok in tokens:
         current.append(tok)
@@ -107,8 +98,7 @@ def main() -> int:
     args = ap.parse_args()
 
     # keep_default_na=False so a post whose entire text is "nan" or "null"
-    # is not turned into a missing value — and so a genuinely empty post
-    # arrives as "" rather than a float we would stringify into a token.
+    # is not turned into a missing value
     df = pd.read_csv(args.input, keep_default_na=False, na_values=[])
     if args.text_column not in df.columns:
         raise SystemExit(f"input has no column {args.text_column!r}; "

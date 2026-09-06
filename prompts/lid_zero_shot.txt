@@ -3,9 +3,9 @@ Determine the language label for each token in the input text.
 Use the following labels:
 TR: Turkish
 EN: English
-MIXED: Mixed Turkish and English within a single token (an English stem carrying a Turkish suffix, e.g. "link'teki")
+MIXED: Mixed Turkish and English
 OTHER: Any other language
-NE: Named entity (all or part of a named entity)
+NE: Named entity (representing all or part of a named entity)
 AMBIGUOUS: Could belong to either language in context
 
 The input consists of numbered tokens. Each input line contains an integer index, followed by a tab character, followed by a token.
@@ -21,18 +21,6 @@ For every input line:
 Output each line in the following format:
 
 INDEX|LABEL
-
-The separator between INDEX and LABEL must be the vertical bar character "|".
-Do not use tabs.
-Do not use spaces.
-
-Correct:
-1|TR
-
-Incorrect:
-1 TR
-1	TR
-1: TR
 
 The number of output lines must exactly equal the number of input lines.
 

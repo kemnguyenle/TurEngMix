@@ -14,6 +14,5 @@ results/predictions/*.ckpt.json
 results/*.txt
 results/*_confusion.csv
 
-# Keep the scored summaries so a reader can see our numbers without a GPU.
 !results/metrics.json
 !results/table_*.md

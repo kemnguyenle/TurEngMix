@@ -20,7 +20,6 @@ Dataset: [huggingface.co/datasets/ilydoa/TurEngMix](https://huggingface.co/datas
 git clone https://github.com/ilydoa/TurEngMix && cd TurEngMix
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-pytest -q
 ```
 The released benchmark is provided directly as `data/benchmark.csv`.
 The original annotation export is retained at

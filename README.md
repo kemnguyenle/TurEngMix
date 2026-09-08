@@ -22,11 +22,9 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 pytest -q
 ```
-Rebuild the benchmark from the raw annotation export:
-
-```bash
-python scripts/normalize_annotations.py    # -> data/benchmark.csv
-python scripts/make_splits.py              # -> data/splits/
+The released benchmark is provided directly as `data/benchmark.csv`.
+The original annotation export is retained at
+`data/raw/annotations_raw.csv` for provenance.
 ```
 
 ## Reproducing the results

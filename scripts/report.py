@@ -142,8 +142,6 @@ def table09(results, baseline) -> str:
     runs = [r for r in results if r["task"] == "lid"]
     lines = header(
         "Table 9 — Macro F1, language identification",
-        "Macro-averaged over the six LID classes. Decoder LLMs were run over "
-        "the complete benchmark; encoders were evaluated on the test split. "
         "Encoder rows are mean ± SD across seeds.", baseline)
     lines += ["| Model | Scope | Macro F1 | Accuracy | Malformed | Tokens |",
               "|:--|:--|--:|--:|--:|--:|"]
@@ -160,9 +158,7 @@ def table09(results, baseline) -> str:
 def table08(results) -> str:
     runs = [r for r in results if r["task"] == "lid"]
     lines = header(
-        "Table 8 — Per-class F1, language identification",
-        "The aggregate scores in Table 9 mask sharp per-class variation: "
-        "monolingual tokens are labelled reliably while MIXED tokens are not.")
+        "Table 8 — Per-class F1, language identification")
     lines += ["| Model | " + " | ".join(LID_LABELS) + " |",
               "|:--|" + "--:|" * len(LID_LABELS)]
     for base, rs in group_by_base(runs):
@@ -180,9 +176,7 @@ def table10(results, baseline) -> str:
     runs = [r for r in results if r["task"] == "ner"]
     lines = header(
         "Table 10 — BIO-level macro F1, named entity recognition",
-        "Macro-averaged over the nineteen BIO labels. Encoder macro F1 is far "
-        "below its token accuracy because non-entity tokens are ~94% of the "
-        "data and the rarest entity labels are absent from the test split.",
+        "Macro-averaged over the nineteen BIO labels.",
         baseline)
     lines += ["| Model | Scope | Macro F1 | Accuracy | Malformed | Tokens |",
               "|:--|:--|--:|--:|--:|--:|"]
@@ -200,8 +194,7 @@ def table11(results) -> str:
     runs = [r for r in results if r["task"] == "ner"]
     lines = header(
         "Table 11 — Binary entity detection",
-        "All entity categories collapsed into NE vs Non-NE. Separates failing "
-        "to notice an entity from mislabelling its type or boundary.")
+        "All entity categories collapsed into NE vs Non-NE.")
     lines += ["| Model | Non-NE F1 | NE F1 |", "|:--|--:|--:|"]
     for base, rs in group_by_base(runs):
         lines.append(f"| `{base}` | "
@@ -216,9 +209,7 @@ def tableA3(results, encoders: bool) -> str:
     name = "A4 — encoder models" if encoders else "A3 — decoder LLMs"
     lines = header(
         f"Table {name}: per-entity-type F1",
-        "B- and I- collapsed into one class per entity type. This is a "
-        "different aggregation of the same predictions as Table 10, not a "
-        "different run.")
+        "B- and I- collapsed into one class per entity type.")
     cols = ["O"] + NER_ENTITY_TYPES
     lines += ["| Model | " + " | ".join(cols) + " |",
               "|:--|" + "--:|" * len(cols)]

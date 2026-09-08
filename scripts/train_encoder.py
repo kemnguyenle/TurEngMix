@@ -5,25 +5,19 @@
         --model dbmdz/bert-base-turkish-cased --out models/berturk_lid
 
 One script covers both tasks and all three encoders; only --task, --model and
---out change between the runs in the paper.
+--out change between the runs.
 
-Defaults match §5.2: learning rate 2e-5, weight decay 0.01, at most 10 epochs,
+Learning rate 2e-5, weight decay 0.01, at most 10 epochs,
 and four random seeds. Pass --seeds to train the full set in one command; each
 seed writes its own model directory, and `scripts/report.py` averages them
-into the mean +/- SD the paper reports.
+into the mean +/- SD.
 
 Checkpoint selection uses the same metric the paper reports for that task —
 flat macro-F1 over the six LID classes, or over the nineteen BIO labels for
-NER — so the checkpoint chosen is the one that is best on the number being
-reported. This is deliberately not a span-level metric: LID labels are not
-BIO, and a span scorer reads the first character of each label as a tag
-prefix, turning `TR` into an entity of type "R" and reading `OTHER` as the
-outside tag `O`, which deletes the class. It warns instead of raising, so the
-resulting figure looks like a real number.
+NER. 
 
 Sequence length is one value used for training and evaluation alike
-(--max-length, default 512). Training at 512 and evaluating at 256 silently
-drops every word past the cut in a long post from the reported score.
+(--max-length, default 512).
 """
 
 from __future__ import annotations
@@ -78,9 +72,7 @@ def tokenize_and_align(batch, tokenizer, l2i, max_length, label_all_tokens):
 def build_compute_metrics(task: str):
     """Validation metric = the metric the paper reports for this task.
 
-    Macro-averaged over the closed label set from `turengmix.labels`, so the
-    denominator does not depend on which classes the model happens to predict
-    during a given epoch.
+    Macro-averaged over the closed label set from `turengmix.labels`.
     """
     i2l = id2label(task)
 
@@ -150,7 +142,7 @@ def main() -> int:
 
     tokenizer = AutoTokenizer.from_pretrained(args.model, add_prefix_space=True)
 
-    # Report truncation loudly rather than letting it disappear into the score.
+    # Report truncation.
     dropped = 0
     for units in parts.values():
         for s in units:
@@ -198,8 +190,7 @@ def main() -> int:
         callbacks = ([EarlyStoppingCallback(early_stopping_patience=args.patience)]
                      if args.patience else [])
 
-        # `processing_class`, not `tokenizer=`: the latter is deprecated from
-        # transformers 4.46 and removed in 5.x.
+   
         trainer = Trainer(
             model=model, args=targs,
             train_dataset=tokenized["train"], eval_dataset=tokenized["validation"],

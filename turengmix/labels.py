@@ -1,10 +1,6 @@
 """Label inventories for the TurEngMix benchmark.
 
-Both tasks use a *fixed, closed* label set defined here. Every script imports
-these lists rather than deriving them from whatever happens to appear in a
-file, so that macro-averaged metrics are computed over the same denominator
-for every model. Deriving the label set from the data makes scores from two
-models incomparable whenever they predict different subsets of the classes.
+Both tasks use a *fixed, closed* label set defined here.
 
 `UNK` is not a label. It is the sentinel recorded when a model fails to
 return a parseable label for a token; it is counted and reported separately
@@ -68,8 +64,7 @@ def is_wellformed_bio(tags: list[str]) -> list[int]:
     """Indices where an `I-X` tag has no `B-X` or `I-X` immediately before it.
 
     Returns an empty list for a well-formed sequence. Used by the
-    normalisation step to surface annotation errors rather than let a
-    downstream scorer silently repair them.
+    normalisation step to surface annotation errors.
     """
     bad: list[int] = []
     previous: str | None = None

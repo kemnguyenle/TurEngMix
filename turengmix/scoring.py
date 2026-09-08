@@ -1,27 +1,4 @@
 """Metrics for the TurEngMix baselines.
-
-Every function here implements a metric the paper reports, and the docstrings
-name the table it appears in. The definitions were confirmed by reproducing
-the published majority-class baselines exactly: LID 0.1414 and NER 0.0502
-(Tables 9 and 10), which pins down both the evaluation scope and the macro
-denominator.
-
-Three conventions follow from that, and all three matter:
-
-*Macro averages run over the closed label set*, not the labels present in a
-prediction file — six classes for LID, nineteen BIO labels for NER. A model
-that never predicts `OTHER` is still averaged over it. Deriving the
-denominator from the data would put two models' macro-F1 on different scales.
-
-*Malformed model output counts as incorrect*, matching the paper: "malformed
-outputs were treated as incorrect". Unparseable predictions are recorded as
-`UNK`, which is absent from the label set and therefore earns no credit and
-costs the gold class its recall.
-
-*Evaluation scope differs by model family.* Decoder LLMs were run over the
-complete benchmark (250 posts); encoders were fine-tuned on train/validation
-and evaluated on the test split. `scripts/report.py` applies the right scope
-per run, and the baselines above only reproduce on the test split.
 """
 
 from __future__ import annotations
@@ -44,7 +21,7 @@ INTEGRATED = "MIXED"
 
 def _clean(pred: list[str], allowed: set[str]) -> list[str]:
     """Map anything outside the label set to UNK, so it is counted as an
-    error rather than silently dropped or coerced into a class."""
+    error."""
     return [p if p in allowed else UNK for p in pred]
 
 
@@ -91,8 +68,7 @@ def token_metrics(gold: list[str], pred: list[str], task: str) -> dict:
 def ner_type_metrics(gold: list[str], pred: list[str]) -> dict:
     """Per-entity-type F1 with B- and I- collapsed — Tables A3 and A4.
 
-    `B-PER` and `I-PER` both become `PER`; `O` stays `O`. Ten classes.
-    This is a different aggregation from Table 10, not a different run.
+    `B-PER` and `I-PER` both become `PER`; `O` stays `O`. Ten classes    
     """
     allowed = set(labels_for("ner"))
     pred = _clean(pred, allowed)
@@ -123,8 +99,7 @@ def ner_binary_metrics(gold: list[str], pred: list[str]) -> dict:
     """Binary entity detection: NE vs Non-NE — Table 11.
 
     Collapses every entity category into one class. Separates "failed to
-    notice an entity" from "found it but mislabelled the type or the span",
-    which is the distinction §6.2 draws.
+    notice an entity" from "found it but mislabelled the type or the span".
     """
     allowed = set(labels_for("ner"))
     pred = _clean(pred, allowed)
@@ -143,8 +118,7 @@ def ner_binary_metrics(gold: list[str], pred: list[str]) -> dict:
 def majority_baseline(gold: list[str], task: str) -> dict:
     """Majority-class baseline — the `Baseline` row of Tables 9, 10 and A4.
 
-    Predicts the most frequent gold class for every token. On the test split
-    this reproduces the paper's 0.1414 (LID) and 0.0502 (NER) exactly.
+    Predicts the most frequent gold class for every token. 
     """
     majority = Counter(gold).most_common(1)[0][0]
     return token_metrics(gold, [majority] * len(gold), task) | {
@@ -164,8 +138,6 @@ def integration_error_analysis(
     "tokens containing English-origin stems bearing Turkish suffixes
     (including morphologically adapted named entities)" against "all other
     evaluated tokens" — so the denominator is every non-integrated token.
-    The paper reports 19.7% vs 3.8% for GPT-4o (odds ratio 6.21) and 33.5%
-    vs 5.3% for Qwen (odds ratio 8.84), both on the three-shot NER runs.
     """
     allowed = set(labels_for(task))
     pred = _clean(pred, allowed)
@@ -181,8 +153,6 @@ def integration_error_analysis(
     mixed_rate = a / (a + b) if (a + b) else float("nan")
     other_rate = c / (c + d) if (c + d) else float("nan")
 
-    # Haldane-Anscombe correction only if a cell is empty, so the odds ratio
-    # stays finite without altering it when every cell is populated.
     if 0 in (a, b, c, d):
         odds = ((a + .5) * (d + .5)) / ((b + .5) * (c + .5))
         corrected = True
@@ -201,16 +171,14 @@ def integration_error_analysis(
         "n_integrated": a + b,
         "n_other": c + d,
     }
-    # A chi-square test needs every marginal to be non-zero. On a degenerate
-    # table — no integrated tokens, or a group with no errors at all — report
-    # no test rather than an artefact.
+ 
     out["chi2"] = out["p_value"] = None
     if min(a + b, c + d, a + c, b + d) > 0:
         try:
             from scipy.stats import chi2_contingency
             chi2, p, dof, _ = chi2_contingency([[a, b], [c, d]], correction=False)
             out |= {"chi2": float(chi2), "p_value": float(p), "dof": int(dof)}
-        except ImportError:   # scipy ships with scikit-learn, but do not insist
+        except ImportError:  
             pass
     return out
 
@@ -220,10 +188,6 @@ def error_rate_by_lid(
 ) -> dict:
     """Error rate broken down by the token's gold LID class, with Wilson 95%
     intervals — supporting the per-class discussion in §6.1 and §6.3.
-
-    The intervals are reported because several strata are tiny: `OTHER` has
-    four tokens in the entire benchmark, and a bare proportion there invites
-    over-reading.
     """
     allowed = set(labels_for(task))
     pred = _clean(pred, allowed)
@@ -272,9 +236,6 @@ def confusion(gold: list[str], pred: list[str], task: str):
 
 def aggregate_seeds(values: list[float]) -> dict:
     """Mean and sample standard deviation across random seeds.
-
-    The encoder results are reported as mean +/- SD over four seeds (§5.2), so
-    a single-seed number is not comparable to the published table.
     """
     arr = np.asarray([v for v in values if v == v], dtype=float)
     if arr.size == 0:

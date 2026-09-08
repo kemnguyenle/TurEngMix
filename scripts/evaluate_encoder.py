@@ -4,13 +4,10 @@
     python scripts/evaluate_encoder.py --task lid --model-dir models/berturk_lid
 
 Writes results/predictions/<name>.csv in the same shape as the prompted-LLM
-runs, so `scripts/report.py` scores encoders and LLMs through exactly the same
-code path. This script does not compute metrics itself; that keeps a single
-implementation of every metric in `turengmix.scoring`.
+runs, so `scripts/report.py` scores encoders and LLMs through the same
+code path. 
 
---max-length defaults to 512 to match train_encoder.py. Evaluating at a
-shorter length than training silently drops the tail of every long post from
-the reported score, and prints nothing when it does.
+--max-length defaults to 512 to match train_encoder.py. 
 """
 
 from __future__ import annotations
@@ -44,8 +41,6 @@ def main() -> int:
     ap.add_argument("--max-length", type=int, default=512, dest="max_length")
     args = ap.parse_args()
 
-    # Imported inside main so that --help works without the training stack
-    # installed; a reader scoring existing predictions needs neither.
     import torch
     from transformers import AutoModelForTokenClassification, AutoTokenizer
 
@@ -98,8 +93,6 @@ def main() -> int:
                             i2l[int(argmax[i, first[w]])]
                     else:
                         # Word fell past the truncation point. Recorded as UNK
-                        # so it is counted as an unlabelled token rather than
-                        # dropped from the denominator.
                         predictions[(unit.doc_id, unit.sent_id, tok_id)] = UNK
                         truncated_words += 1
 

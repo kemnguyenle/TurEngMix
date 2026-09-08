@@ -5,23 +5,12 @@
     python scripts/run_llm.py --task ner --model qwen/qwen3-8b   --shots 3 \
         --provider openrouter
 
-One script replaces the four that previously diverged (gpt_lid.py,
-gpt_lid_few_shot.py, gpt_ner.py, qwen_lid.py, qwen_ner.py). That matters for
-more than tidiness: those scripts built the model input three different ways
-and handled unparseable output two different ways, so their error rates were
-not measuring the same thing. Every model now goes through one input
-formatter, one parser and one partial-output policy.
-
 Outputs, under --out-dir (default results/predictions/):
     <run>.csv       benchmark rows plus a prediction column
     <run>.meta.json run configuration, token usage, parse statistics
     <run>.calls.jsonl  one record per API call: prompt, raw response,
                     finish_reason, latency, retry count
     <run>.ckpt.json checkpoint, removed on success
-
-The per-call log is what makes a claimed error rate auditable: a truncated
-response and a confidently wrong answer both produce wrong labels, and only
-`finish_reason` tells them apart.
 """
 
 from __future__ import annotations
@@ -68,11 +57,6 @@ def build_client(provider: str):
 
 
 def call_model(client, args, system_prompt: str, user_prompt: str) -> dict:
-    """One chat completion, with bounded exponential backoff and full jitter.
-
-    Retries only transient failures. A 400 from a malformed request is a bug
-    to surface immediately, not something to sleep on six times.
-    """
     from openai import (
         APIConnectionError, APITimeoutError, InternalServerError, RateLimitError,
     )
@@ -80,10 +64,6 @@ def call_model(client, args, system_prompt: str, user_prompt: str) -> dict:
 
     extra: dict = {}
     if args.disable_reasoning:
-        # Qwen3 and other hybrid-reasoning models emit <think> content by
-        # default. Left on, reasoning competes with the label list for the
-        # token budget and a long post comes back truncated — which scores as
-        # a model error when it is really a budget error.
         extra["reasoning"] = {"enabled": False}
 
     last: Exception | None = None
@@ -197,8 +177,6 @@ def main() -> int:
         print(format_tokens(units[0].tokens))
         return 0
 
-    # Resume: predictions are keyed by (doc_id, sent_id, tok_id), so a resumed
-    # run and a fresh run produce byte-identical output for the same responses.
     predictions: dict[tuple[str, int, int], str] = {}
     done: set[tuple[str, int]] = set()
     if ckpt_path.exists():
@@ -225,7 +203,7 @@ def main() -> int:
                 result = call_model(client, args, system_prompt, user_prompt)
             except Exception as e:
                 # Leave this sentence's tokens absent from `predictions`; they
-                # are written as UNK and counted, never silently skipped.
+                # are written as UNK and counted.
                 print(f"  FAILED {unit.doc_id} s{unit.sent_id}: {e}", file=sys.stderr)
                 stats["failed_units"] += 1
                 done.add(uid)

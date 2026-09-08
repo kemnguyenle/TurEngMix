@@ -1,9 +1,4 @@
 """Loading the TurEngMix benchmark and its published split.
-
-One loader, used by every script. The split is read from committed text files
-rather than regenerated, so a reader who reruns the pipeline months later on a
-different Python gets the same train/validation/test documents we report on.
-`random.shuffle` is not stable across Python versions; a committed file is.
 """
 
 from __future__ import annotations
@@ -40,16 +35,11 @@ class Sentence:
 
 def load_benchmark(path: str | Path = DEFAULT_BENCHMARK) -> pd.DataFrame:
     """Load the canonical benchmark and assert its invariants.
-
-    Reading `token` with `keep_default_na=False` matters: tokens such as
-    "nan", "null" and "NA" occur in real text and pandas would otherwise turn
-    them into missing values.
     """
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(
             f"benchmark not found at {path}\n"
-            "Run:  python scripts/normalize_annotations.py"
         )
     df = pd.read_csv(
         path,
@@ -65,9 +55,6 @@ def load_benchmark(path: str | Path = DEFAULT_BENCHMARK) -> pd.DataFrame:
     if missing:
         raise ValueError(f"benchmark is missing columns: {missing}")
 
-    # Invariants the normalisation step guarantees. Checking them on load
-    # turns a corrupted file into an immediate, named error instead of a
-    # silently wrong number several hours later.
     key = ["doc_id", "sent_id", "tok_id"]
     dupes = df[df.duplicated(key, keep=False)]
     if len(dupes):
@@ -87,9 +74,7 @@ def sentences(df: pd.DataFrame, task: str) -> list[Sentence]:
     """Group a benchmark frame into annotation units, in file order.
 
     Grouping is on (doc_id, sent_id) with `sort=False`, so tokens keep the
-    order they appear in the file. `tok_id` is deliberately *not* used to
-    order or index: it carries gaps left by tokens removed during annotation
-    cleaning and is an identifier, not a position.
+    order they appear in the file. 
     """
     col = gold_column(task)
     out: list[Sentence] = []
@@ -104,11 +89,7 @@ def sentences(df: pd.DataFrame, task: str) -> list[Sentence]:
 
 
 def load_split(split_dir: str | Path = DEFAULT_SPLIT_DIR) -> dict[str, list[str]]:
-    """Read the committed document-level split as {split_name: [doc_id, ...]}.
-
-    Committed rather than regenerated: this exact partition reproduces Table 7
-    of the paper (200/25/25 posts, 254/26/41 sentences, 12,466/1,173/1,373
-    tokens), and `random.shuffle` is not stable across Python versions."""
+    """Read the committed document-level split as {split_name: [doc_id, ...]}."""
     split_dir = Path(split_dir)
     split = {}
     for name in ("train", "validation", "test"):
@@ -156,10 +137,6 @@ def write_predictions(
     column: str, path: str | Path,
 ) -> pd.DataFrame:
     """Attach a prediction column keyed by (doc_id, sent_id, tok_id) and save.
-
-    Keying on the identifier triple rather than on row position means a
-    partially complete run, a resumed run and a full run all produce the same
-    file layout, and a misaligned prediction is impossible to write silently.
     """
     out = df.copy()
     keys = list(zip(out["doc_id"], out["sent_id"], out["tok_id"]))

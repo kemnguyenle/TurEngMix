@@ -6,13 +6,6 @@
 Writes data/splits/{train,validation,test}.txt — plain lists of doc_ids that
 are committed to the repository and read by every downstream script.
 
-Committing the lists rather than regenerating them is the point. The original
-pipeline reshuffled with `random.shuffle` at the top of each preparation
-script; that is not stable across Python versions, and it was run separately
-for LID and for NER, so the two tasks' "identical split" held only by
-coincidence. Reading a file removes both problems and lets anyone reproduce
-our exact numbers.
-
 Splitting is by document: every sentence of a post lands in the same split, so
 no post leaks across the boundary.
 """

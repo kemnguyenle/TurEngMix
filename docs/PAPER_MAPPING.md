@@ -7,9 +7,9 @@ Every table and reported figure, and what produces it.
 | Paper | What it reports | Produced by | Output |
 |:--|:--|:--|:--|
 | Table 2 | Corpus statistics | `corpus_construction/` | not reproducible — see below |
-| Table 4 | LID label distribution | `scripts/normalize_annotations.py` | `data/normalization_report.json` → `lid_distribution` |
-| Table 5 | NER label distribution | `scripts/normalize_annotations.py` | `data/normalization_report.json` → `ner_by_entity_type` |
-| Table 6 | Code-mixing pattern counts | — | not in the released columns; see note below |
+Table 4 | LID label distribution | data/benchmark.csv | computed directly from benchmark
+Table 5 | NER label distribution | data/benchmark.csv | computed directly from benchmark
+| Table 6 | Code-mixing pattern counts | — | not in the released columns; corresponding dataset on HuggingFace |
 | Table 7 | Split sizes | `scripts/make_splits.py` | `data/splits/*.txt` |
 | Table 8 | Per-class F1, LID | `scripts/report.py` | `results/table08_lid_per_class.md` |
 | Table 9 | Macro F1, LID | `scripts/report.py` | `results/table09_lid_macro.md` |

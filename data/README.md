@@ -33,7 +33,7 @@ belonging to a named entity takes `NE` regardless of its BIO tag.
 
 | TR | EN | NE | MIXED | AMBIGUOUS | OTHER |
 |--:|--:|--:|--:|--:|--:|
-| 11,751 | 2,016 | 986 | 193 | 62 | 4 |
+| 11,723 | 1,992 | 1,042 | 189 | 62 | 4 |
 
 `MIXED` marks a token whose stem and suffix come from different languages —
 *entry'nin*, *link'teki*. `AMBIGUOUS` is a token that could belong to either
@@ -43,11 +43,11 @@ language in context.
 
 | O | B-PROD | B-TITLE | I-TITLE | B-ORG | B-PER | B-LOC | I-PER | B-OTHER | I-PROD |
 |--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| 13,984 | 304 | 122 | 117 | 100 | 74 | 66 | 49 | 49 | 46 |
+| 12,923 | 313 | 124 | 122 | 100 | 73 | 70 | 46 | 46 | 46 |
 
 | I-ORG | I-LOC | B-GROUP | I-EVENT | I-GROUP | I-OTHER | B-EVENT | B-TIME | I-TIME |
 |--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| 29 | 16 | 15 | 14 | 11 | 8 | 5 | 3 | 0 |
+| 29 | 18 | 15 | 14 | 11 | 8 | 5 | 3 | 0 |
 
 ## Split
 

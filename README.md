@@ -4,11 +4,6 @@ Corpus, benchmark and code for **TurEngMix: A Text Corpus and Benchmark for
 Turkish–English Code-Mixed Language Identification and Named Entity
 Recognition**.
 
-Turkish lets an English stem take a Turkish suffix, producing a single
-mixed-language word — *influencerlarımız*, *frameworklerinin*, *link'teki*.
-Models label monolingual tokens in code-mixed text reliably and these tokens
-poorly. That gap is what the benchmark measures.
-
 - **Benchmark** — 15,012 expert-annotated tokens, 250 posts, with a published
   document-level split
 - **Corpus** — 5,549 posts, 486,974 tokens, from Ekşi Sözlük
@@ -65,17 +60,14 @@ anything; `--limit 5` is a cheap smoke test.
 Two flags matter. **`--disable-reasoning` for Qwen3** — it is a hybrid
 reasoning model, and left on, `<think>` content competes with the label list
 for the token budget so long posts come back truncated. And **`--seeds 1 2 3 4`** for encoders, because
-§5.2 reports mean ± SD over four seeds and a single-seed number is not
-comparable to the published table.
+§5.2 reports mean ± SD over four seeds.
 
 Encoders were trained on one A6000, about six minutes per run.
 
 ## How the numbers are defined
 
 Every metric is in `turengmix/scoring.py`, and each docstring names the table
-it produces. The definitions were confirmed by reproducing the published
-baselines, which pins down the evaluation scope and the macro denominator at
-once. Four decisions are load-bearing:
+it produces. 
 
 **Macro averages use the closed label set** — six LID classes, nineteen BIO
 labels — not the labels present in a given prediction file. A model that never
@@ -92,8 +84,7 @@ the gold class its recall. The rate appears in every table, and the confusion
 matrix carries a real `UNK` column so rows still sum to class support.
 
 **Partial output is kept.** When a model labels 90 of 100 tokens, those 90 are
-scored and the rest are `UNK` — one policy for every model, so error rates are
-comparable across them.
+scored and the rest are `UNK`.
 
 ## Layout
 
@@ -122,18 +113,8 @@ docs/PAPER_MAPPING.md   table-by-table mapping
 ```
 
 Predictions are keyed by `(doc_id, sent_id, tok_id)` throughout, so a fresh
-run, a resumed run and a partial run produce the same file layout, and a
-misaligned prediction cannot be written silently. Encoder and LLM runs emit
-the same prediction format, so one scorer handles both — which is what lets
-their numbers share a table.
-
-## Notes for anyone building on this
-
-**Prediction files are not committed.** Regenerating them needs an API key, a
-GPU and about a day. If you have the CSVs from the paper's runs, dropping them
-in `results/predictions/` makes `python scripts/report.py` reproduce every
-results table in seconds on any laptop. See the last section of
-`docs/PAPER_MAPPING.md`.
+run, a resumed run and a partial run produce the same file layout. Encoder and LLM runs emit
+the same prediction format, so one scorer handles both.
 
 ## Citation
 

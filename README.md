@@ -32,8 +32,7 @@ python scripts/make_splits.py              # -> data/splits/
 ## Reproducing the results
 
 **[`docs/PAPER_MAPPING.md`](docs/PAPER_MAPPING.md) maps every table in the
-paper to the script that produces it**, records the metric definitions, and
-lists what is not reproducible and why. Start there.
+paper to the script that produces it** and records the metric definitions.
 
 The short version — produce predictions, then score them:
 
@@ -95,19 +94,16 @@ turengmix/              one implementation of each thing
   prompting.py          input format and output parser, shared by every model
   scoring.py            every metric, keyed to the table it produces
 scripts/
-  normalize_annotations.py   raw export -> data/benchmark.csv, changes logged
   make_splits.py             writes the committed split (verifies Table 7)
   run_llm.py                 prompted baselines, both tasks, both providers
   train_encoder.py           fine-tuning, both tasks, multi-seed
   evaluate_encoder.py        encoder predictions, same format as the LLM runs
   report.py                  predictions -> the paper's tables
-  export_hf_splits.py        builds the Hugging Face upload
 prompts/                {lid,ner}_{zero,few}_shot.txt  (Appendix A.3)
 data/
   raw/annotations_raw.csv    original export, untouched
   benchmark.csv              canonical
   splits/                    committed doc_id lists
-  normalization_report.json  every change, open issues, drift vs Tables 4-5
 corpus_construction/    how the corpus was collected (Appendix A.1-A.2)
 docs/PAPER_MAPPING.md   table-by-table mapping
 ```

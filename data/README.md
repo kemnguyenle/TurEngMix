@@ -47,7 +47,7 @@ language in context.
 
 | I-ORG | I-LOC | B-GROUP | I-EVENT | I-GROUP | I-OTHER | B-EVENT | B-TIME | I-TIME |
 |--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| 29 | 18 | 15 | 14 | 11 | 8 | 5 | 3 | 0 |
+| 29 | 18 | 15 | 14 | 11 | 6 | 5 | 3 | 0 |
 
 ## Split
 

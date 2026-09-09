@@ -11,6 +11,7 @@ Recognition**.
   XLM-RoBERTa, BERTurk and TurkishBERTweet
 
 Dataset: [huggingface.co/datasets/ilydoa/TurEngMix](https://huggingface.co/datasets/ilydoa/TurEngMix)
+Paper: https://arxiv.org/abs/2609.06963
 
 ---
 
@@ -112,6 +113,18 @@ the same prediction format, so one scorer handles both.
 ## Citation
 
 See `CITATION.cff`.
+
+<pre>
+@misc{dogan2026turengmixtextcorpusbenchmark,
+      title={TurEngMix: A Text Corpus and Benchmark for Turkish-English Code-Mixed Language Identification and Named Entity Recognition}, 
+      author={Ilayda Dogan and Phuong-Anh Nguyen-Le and Julia Mendelsohn},
+      year={2026},
+      eprint={2609.06963},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2609.06963}, 
+}
+</pre>
 
 ## Licence
 
